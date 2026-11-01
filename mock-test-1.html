@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="bn" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WBPSC Clerkship Arithmetic 120 Questions Mock Test</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter & Noto Sans Bengali -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans Bengali', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', 'Noto Sans Bengali', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 h-full flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-indigo-900 text-white shadow-md z-20 flex-none">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-indigo-700 p-2 rounded-xl text-amber-400">
+                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg md:text-xl tracking-wide">WBPSC Clerkship Mock Test</h1>
+                    <p class="text-xs text-indigo-200">Arithmetic: Divisibility, Fractions, Decimals, Simplification</p>
+                </div>
+            </div>
+            <div id="timer-container" class="hidden items-center bg-indigo-950 px-4 py-2 rounded-xl border border-indigo-700/50">
+                <i class="fa-regular fa-clock text-amber-400 mr-2"></i>
+                <span class="text-xs text-indigo-300 mr-1.5 hidden sm:inline">অবশিষ্ট সময়:</span>
+                <span id="time-remaining" class="font-mono font-bold text-amber-400 text-base md:text-lg">01:30:00</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 flex flex-col max-w-7xl w-full mx-auto p-3 sm:p-6 overflow-hidden">
+
+        <!-- Welcome / Start View -->
+        <div id="start-view" class="flex-1 flex items-center justify-center">
+            <div class="bg-white p-6 sm:p-10 rounded-3xl shadow-xl max-w-xl w-full text-center border border-slate-100">
+                <div class="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl shadow-inner">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 mb-2">গণিত মক টেস্ট (১২০টি প্রশ্ন)</h2>
+                <p class="text-slate-600 text-sm mb-6 leading-relaxed">
+                    পশ্চিমবঙ্গ পাবলিক সার্ভিস কমিশন (WBPSC) ক্লার্কশিপ পরীক্ষার সিলেবাস অনুযায়ী বিভাজ্যতা, ভগ্নাংশ, দশমিক, পৌনিক দশমিক এবং সরলীকরণ থেকে অত্যন্ত গুরুত্বপূর্ণ ১২০টি বহু বিকল্পভিত্তিক প্রশ্ন (MCQ) নিয়ে এই টেস্ট তৈরি করা হয়েছে।
+                </p>
+                <div class="bg-slate-50 rounded-2xl p-4 mb-6 text-left border border-slate-200/60 space-y-2 text-xs sm:text-sm text-slate-700">
+                    <div class="flex items-center"><i class="fa-solid fa-circle-check text-emerald-500 mr-2.5"></i> মোট প্রশ্ন: ১২০টি</div>
+                    <div class="flex items-center"><i class="fa-solid fa-circle-check text-emerald-500 mr-2.5"></i> মোট সময়: ৯০ মিনিট (১ ঘণ্টা ৩০ মিনিট)</div>
+                    <div class="flex items-center"><i class="fa-solid fa-circle-check text-emerald-500 mr-2.5"></i> নেগেটিভ মার্কিং নেই</div>
+                </div>
+                <button onclick="startExam()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3.5 px-6 rounded-xl shadow-lg shadow-indigo-600/30 transition-all duration-200 flex items-center justify-center text-base">
+                    <span>পরীক্ষা শুরু করুন</span>
+                    <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Exam View (Hidden Initially) -->
+        <div id="exam-view" class="hidden flex-1 flex flex-col lg:flex-row gap-6 overflow-hidden">
+            
+            <!-- Left Pane: Question Box -->
+            <div class="flex-1 bg-white rounded-3xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                <!-- Question Header -->
+                <div class="p-4 sm:p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                    <span id="question-indicator" class="text-xs sm:text-sm font-semibold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
+                        প্রশ্ন ১ / ১২০
+                    </span>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="toggleMarkForReview()" id="mark-review-btn" class="text-xs sm:text-sm font-medium px-3 py-1.5 rounded-xl border border-amber-300 text-amber-700 bg-amber-50 hover:bg-amber-100 transition">
+                            <i class="fa-regular fa-bookmark mr-1"></i> রিভিউ মার্ক করুন
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question Body -->
+                <div class="p-6 sm:p-8 flex-1 overflow-y-auto">
+                    <h3 id="question-text" class="text-base sm:text-lg font-medium text-slate-900 mb-6 leading-relaxed">
+                        <!-- Question Text Here -->
+                    </h3>
+
+                    <div id="options-container" class="space-y-3">
+                        <!-- Options Here -->
+                    </div>
+                </div>
+
+                <!-- Question Navigation Footer -->
+                <div class="p-4 sm:p-6 border-t border-slate-100 bg-slate-50/50 flex justify-between items-center">
+                    <button onclick="prevQuestion()" id="prev-btn" class="px-4 py-2 text-sm font-medium bg-white border border-slate-300 text-slate-700 rounded-xl hover:bg-slate-50 transition shadow-sm disabled:opacity-40 disabled:cursor-not-allowed flex items-center">
+                        <i class="fa-solid fa-chevron-left mr-1.5 text-xs"></i> পূর্ববর্তী
+                    </button>
+                    <button onclick="clearResponse()" class="text-xs text-slate-500 hover:text-rose-600 font-medium underline">
+                        উত্তর মুছুন
+                    </button>
+                    <button onclick="nextQuestion()" id="next-btn" class="px-5 py-2 text-sm font-medium bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition shadow-md shadow-indigo-600/20 flex items-center">
+                        পরবর্তী <i class="fa-solid fa-chevron-right ml-1.5 text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Pane: Question Palette & Submit -->
+            <div class="w-full lg:w-80 bg-white rounded-3xl shadow-sm border border-slate-200 flex flex-col overflow-hidden max-h-72 lg:max-h-full">
+                <div class="p-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+                    <h4 class="font-semibold text-sm text-slate-800">প্রশ্ন তালিকা</h4>
+                    <span class="text-xs text-slate-500" id="answered-count">০/১২০ উত্তর দেওয়া হয়েছে</span>
+                </div>
+
+                <!-- Legend -->
+                <div class="px-4 py-2.5 bg-slate-100/70 border-b border-slate-200/60 grid grid-cols-2 gap-2 text-[11px] text-slate-600">
+                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block mr-1.5"></span> উত্তর দেওয়া</div>
+                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-amber-500 inline-block mr-1.5"></span> রিভিউ মার্ক</div>
+                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-white border border-slate-300 inline-block mr-1.5"></span> উত্তরহীন</div>
+                </div>
+
+                <!-- Palette Grid -->
+                <div id="palette-grid" class="p-4 flex-1 overflow-y-auto grid grid-cols-6 gap-2 content-start">
+                    <!-- Palette Buttons generated by JS -->
+                </div>
+
+                <!-- Submit Button -->
+                <div class="p-4 border-t border-slate-100 bg-slate-50/50">
+                    <button onclick="confirmSubmit()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-xl shadow-md shadow-emerald-600/20 transition text-sm flex items-center justify-center">
+                        <i class="fa-solid fa-check-double mr-2"></i> টেস্ট জমা দিন (Submit)
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Result / Scorecard View (Hidden Initially) -->
+        <div id="result-view" class="hidden flex-1 overflow-y-auto space-y-6">
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 sm:p-8 text-center max-w-3xl mx-auto">
+                <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 mb-1">টেস্ট মূল্যায়ন সম্পন্ন!</h2>
+                <p class="text-slate-500 text-sm mb-6">আপনার পরীক্ষার ফলাফল নিচে দেওয়া হলো:</p>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/60">
+                        <div class="text-xs text-slate-500 mb-1">মোট স্কোর</div>
+                        <div id="res-score" class="text-xl sm:text-2xl font-bold text-indigo-600">০ / ১২০</div>
+                    </div>
+                    <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-200/60">
+                        <div class="text-xs text-emerald-700 mb-1">সঠিক উত্তর</div>
+                        <div id="res-correct" class="text-xl sm:text-2xl font-bold text-emerald-600">০</div>
+                    </div>
+                    <div class="bg-rose-50 p-4 rounded-2xl border border-rose-200/60">
+                        <div class="text-xs text-rose-700 mb-1">ভুল উত্তর</div>
+                        <div id="res-incorrect" class="text-xl sm:text-2xl font-bold text-rose-600">০</div>
+                    </div>
+                    <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200/60">
+                        <div class="text-xs text-amber-700 mb-1">অনত্তরিত</div>
+                        <div id="res-unattempted" class="text-xl sm:text-2xl font-bold text-amber-600">০</div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center space-x-3">
+                    <button onclick="location.reload()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-6 rounded-xl shadow transition text-sm">
+                        <i class="fa-solid fa-rotate-right mr-1.5"></i> আবার পরীক্ষা দিন
+                    </button>
+                    <button onclick="scrollToReview()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-2.5 px-6 rounded-xl transition text-sm">
+                        <i class="fa-solid fa-list-check mr-1.5"></i> উত্তরমালা পর্যালোচনা করুন
+                    </button>
+                </div>
+            </div>
+
+            <!-- Detailed Answer Review List -->
+            <div id="review-list-container" class="max-w-3xl mx-auto space-y-4 pb-12">
+                <h3 class="font-bold text-lg text-slate-800 px-2">প্রশ্ন ও সঠিক উত্তরমালা বিশ্লেষণ</h3>
+                <div id="review-items" class="space-y-4">
+                    <!-- Review items populated dynamically -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Custom Modal for Confirmation -->
+    <div id="confirm-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-slate-100 text-center animate-in fade-in zoom-in duration-200">
+            <div class="w-14 h-14 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">আপনি কি নিশ্চিতভাবে জমা দিতে চান?</h3>
+            <p id="modal-desc" class="text-slate-600 text-sm mb-6">জমা দেওয়ার পর আপনি আর উত্তর পরিবর্তন করতে পারবেন না।</p>
+            <div class="flex space-x-3">
+                <button onclick="closeModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 rounded-xl transition text-sm">
+                    ফিরে যান
+                </button>
+                <button onclick="submitExam()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl shadow-lg shadow-emerald-600/20 transition text-sm">
+                    হ্যাঁ, জমা দিন
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // 120 Questions Database covering Divisibility, Fractions, Decimals, Recurring Decimals, and Simplification in Bengali
+        const questions = [
+            { id: 1, q: "১৭ এর পাওয়ার ২০০ (17^200) + ১৮ কে ১৬ দিয়ে ভাগ করলে ভাগশেষ কত হবে?", options: ["১", "২", "৩", "৪"], ans: 2 },
+            { id: 2, q: "৩/৫, ৭/১০, ২/৩, ৪/৭-এর মধ্যে ক্ষুদ্রতম ভগ্নাংশ কোনটি?", options: ["৩/৫", "৭/১০", "২/৩", "৪/৭"], ans: 3 },
+            { id: 3, q: "০.০৪ × ০.০০৩ × ০.৫-এর মান কত?", options: ["০.০০০০৬", "০.০০০৬", "০.০০৬", "০.০৬"], ans: 0 },
+            { id: 4, q: "০.২(পৌনিক ৭) বা 0.27 এর সাধারণ ভগ্নাংশ রূপ কত?", options: ["২৭/১০০", "৩/১১", "২৫/৯০", "১৩/৪৫"], ans: 1 },
+            { id: 5, q: "{(২.৩)^৩ - ১} / {(২.৩)^২ + ২.৩ + ১}-এর মান কত?", options: ["১.৩", "৩.৩", "১.০", "২.৩"], ans: 0 },
+            { id: 6, q: "সবচেয়ে ছোট কোন সংখ্যাটি ১২, ১৫, ২০ এবং ২৭ দ্বারা ভাগ করলে প্রতিক্ষেত্রে অবশিষ্ট ৭ থাকে?", options: ["৫৪০", "৫৪৭", "৫৩৩", "৫৫০"], ans: 1 },
+            { id: 7, q: "একটি বাঁশের ১/৪ অংশ কাদায় এবং ১/২ অংশ জলে আছে। যদি জলের উপরে বাঁশটির ৩ মিটার থাকে, তবে বাঁশটির মোট দৈর্ঘ্য কত?", options: ["১০ মিটার", "১২ মিটার", "৮ মিটার", "৬ মিটার"], ans: 1 },
+            { id: 8, q: "৩.২৫ × ০.০৪-এর মান কত?", options: ["০.১৩", "১.৩", "০.০১৩", "১৩.০"], ans: 0 },
+            { id: 9, q: "০.৩(পৌনিক ৪৫) কে সাধারণ ভগ্নাংশে প্রকাশ করলে কত হবে?", options: ["৩৪৭/৯৯৯", "৩৪২/৯৯০", "৩৮/১১০", "১৯/৫৫"], ans: 3 },
+            { id: 10, q: "{ (০.১)^৩ + (০.০২)^৩ } / { (০.২)^৩ + (০.০৪)^৩ }-এর মান কত?", options: ["১/২", "১/৪", "১/৮", "১"], ans: 2 },
+            { id: 11, q: "৪ এর পাওয়ার ৯৬ (4^96) কে ৬ দ্বারা ভাগ করলে ভাগশেষ কত হবে?", options: ["১", "২", "৪", "৩"], ans: 1 },
+            { id: 12, q: "৩/৪, ৫/৬, ৭/৮-এর গসাগু (HCF) কত?", options: ["১/২৪", "১০৫/২", "৩/২৪", "১/১২"], ans: 0 },
+            { id: 13, q: "০.২ + ০.২২ + ০.২২২ + ২.২-এর মান কত?", options: ["২.৮৪২", "২.৬৪২", "২.৮২৪", "২.৪৪২"], ans: 0 },
+            { id: 14, q: "০.(পৌনিক ৬৩) + ০.(পৌনিক ৩৭)-এর মান কত?", options: ["১", "০.(পৌনিক ৯৯)", "১০০/৯৯", "A এবং C উভয়ই"], ans: 3 },
+            { id: 15, q: "যদি x/y = ৩/৪ হয়, তবে {৪/৫ + (y-x)/(y+x)} / {৪/৫ - (y-x)/(y+x)}-এর মান কত?", options: ["৭", "৯", "৫", "৩"], ans: 0 },
+            { id: 16, q: "৭^৩ + ৭^৪ + ৭^৫ + ৭^৬ সংখ্যাটি নিচের কোন সংখ্যা দ্বারা সম্পূর্ণরূপে বিভাজ্য?", options: ["৩৯৬", "৩৯৭", "৩৯৮", "৩৯৯"], ans: 3 },
+            { id: 17, q: "কোনো সংখ্যার ৩/৫-এর ১/৪ অংশ যদি ১৫ হয়, তবে সংখ্যাটি কত?", options: ["৭৫", "১০০", "১২৫", "১৫০"], ans: 1 },
+            { id: 18, q: "১.০৪ এবং ০.০৮-এর ভাগফল কত?", options: ["১.৩", "১৩", "০.১৩", "১৩০"], ans: 1 },
+            { id: 19, q: "২.(পৌনিক ৩) কে সাধারণ ভগ্নাংশে পরিণত করো।", options: ["২১/৯", "৭/৩", "২৩/১০", "২৩/৯"], ans: 1 },
+            { id: 20, q: "একটি জলপূর্ণ জারের ৩/৫ অংশ খালি করতে ১২ লিটার জল লাগে। জারটিতে মোট কত লিটার জল ধরে?", options: ["২০ লিটার", "৩০ লিটার", "২৫ লিটার", "৪০ লিটার"], ans: 0 },
+            { id: 21, q: "পাঁচ অঙ্কের কোন ক্ষুদ্রতম সংখ্যাটি ১৬, ২৪, ৩২ এবং ৩৬ দ্বারা বিভাজ্য?", options: ["১০১০", "১০০৮০", "১০৫৬০", "১০১২০"], ans: 1 },
+            { id: 22, q: "দু'টি ভগ্নাংশের গুণফল ১৪/১৫ এবং তাদের ভাগফল ৩৫/২৪ হলে, বৃহত্তর ভগ্নাংশটি কত?", options: ["৭/৪", "৪/৩", "৭/৬", "৫/৪"], ans: 2 },
+            { id: 23, q: "০.০০৮ এর ঘনমূল (cube root) কত?", options: ["০.২", "০.০২", "২.০", "০.০০২"], ans: 0 },
+            { id: 24, q: "০.০০৯ / ? = ০.০১, তবে '?' এর মান কত?", options: ["০.৯", "০.০৯", "৯.০", "০.০০৯"], ans: 0 },
+            { id: 25, q: "তিন অঙ্কের কোন বৃহত্তম সংখ্যাটিকে ১০, ১২ এবং ১৫ দিয়ে ভাগ করলে প্রতি ক্ষেত্রে ভাগশেষ ৪ থাকে?", options: ["৯৬৪", "৯৭৪", "৯৮৪", "৯৫৪"], ans: 0 },
+            { id: 26, q: "যদি ৫৪৩২*৭ সংখ্যাটি ৯ দ্বারা বিভাজ্য হয়, তবে স্টার (*) চিহ্নের জায়গায় কোন অঙ্কটি বসবে?", options: ["১", "২", "৩", "৪"], ans: 1 },
+            { id: 27, q: "(১ - ১/২)(১ - ১/৩)(১ - ১/৪) ... (১ - ১/n)-এর মান কত?", options: ["১/n", "১ - ১/n", "২/n", "(n-1)/2"], ans: 0 },
+            { id: 28, q: "০.৫ এর বর্গমূল কত?", options: ["০.৭", "০.৭০৭", "০.২৫", "০.০৭"], ans: 1 },
+            { id: 29, q: "৩ এর পাওয়ার ২৫ + ৩ এর পাওয়ার ২৬ + ৩ এর পাওয়ার ২৭ সংখ্যাটি নিচের কোন সংখ্যা দ্বারা সম্পূর্ণরূপে বিভাজ্য?", options: ["১১", "১২", "১৩", "১৪"], ans: 2 },
+            { id: 30, q: "একটি সংখ্যাকে ৫৬ দ্বারা ভাগ করলে ভাগশেষ ২৯ থাকে। যদি ওই সংখ্যাটিকে ৮ দ্বারা ভাগ করা হয়, তবে ভাগশেষ কত হবে?", options: ["৩", "৪", "৫", "৬"], ans: 2 },
+            { id: 31, q: "কোনো সংখ্যাকে ১১৯ দ্বারা ভাগ করলে ভাগশেষ ১৯ থাকে। ওই সংখ্যাটিকে ১৭ দ্বারা ভাগ করলে ভাগশেষ কত হবে?", options: ["১", "২", "৩", "৪"], ans: 1 },
+            { id: 32, q: "৪/৫, ৬/৮, ৭/৯-কে মানের ঊর্ধ্বক্রমে সাজালে কোনটি সঠিক?", options: ["৪/৫ < ৬/৮ < ৭/৯", "৬/৮ < ৭/৯ < ৪/৫", "৭/৯ < ৬/৮ < ৪/৫", "৬/৮ < ৪/৫ < ৭/৯"], ans: 1 },
+            { id: 33, q: "নীচের কোনটি সবচেয়ে বড় সংখ্যা?", options: ["০.৫", "০.৫ × ০.৫", "বর্গমূল ০.৫", "১ / ০.৫"], ans: 3 },
+            { id: 34, q: "০.১(পৌনিক ৬) এর মান কত?", options: ["১৬/৯৯", "৫/৩০", "১/৬", "B এবং C উভয়ই"], ans: 3 },
+            { id: 35, q: "একটি সংখ্যার ৩/৪ অংশ থেকে ১৫ বিয়োগ করলে বিয়োগফল ৭৫ হয়। সংখ্যাটি কত?", options: ["১২০", "৯০", "১০০", "১৪০"], ans: 0 },
+            { id: 36, q: "(৪৯ এর পাওয়ার ১৫) - ১ সংখ্যাটি নিচের কোন সংখ্যা দ্বারা সম্পূর্ণরূপে বিভাজ্য?", options: ["৬", "৭", "৮", "সবগুলি"], ans: 2 },
+            { id: 37, q: "দুটি সংখ্যার গুণফল ৫/৬ এবং তাদের একটি ৪/৩ হলে, অপর সংখ্যাটি কত?", options: ["৫/৮", "৮/৫", "১০/৯", "৫/৯"], ans: 0 },
+            { id: 38, q: "৫০.০৫ - ২০.৫০ + ৫.০০৫-এর মান কত?", options: ["৩৪.৫৫৫", "৩৫.৫৫৫", "৩৪.০৫৫", "৩৬.৫৫৫"], ans: 0 },
+            { id: 39, q: "০.২৫৬ (পৌনিক ২ ও ৬ এর উপর) সংখ্যাটিতে পৌনিক তুলে সাধারণ ভগ্নাংশে পরিণত করলে হর (Denominator) কত হবে?", options: ["১০০", "৯০০", "৯৯৯", "৯৯০"], ans: 2 },
+            { id: 40, q: "সবচেয়ে ছোট কোন সংখ্যাটির সাথে ৭ যোগ করলে যোগফলটি ২৪, ৩২, ৩৬ এবং ৫৪ দ্বারা নিঃশেষে বিভাজ্য হবে?", options: ["৮৫৭", "৮৬৪", "৮৭১", "৮৫০"], ans: 0 },
+            { id: 41, q: "যদি কোনো সংখ্যাকে ১৩ দিয়ে গুণ করলে এমন একটি সংখ্যা পাওয়া যায় যার সবকটি অঙ্কই ৫, তবে সেই ক্ষুদ্রতম সংখ্যাটি কত?", options: ["৪২৭৩৫", "৪২৫৩৫", "৪১৩৫৫", "৪২৭৪৫"], ans: 0 },
+            { id: 42, q: "৫/১২, ১১/১৮, ৭/৮, ১৩/২৪-এর মধ্যে বৃহত্তম ভগ্নাংশ কোনটি?", options: ["১১/১৮", "৭/৮", "৫/১২", "১৩/২৪"], ans: 1 },
+            { id: 43, q: "০.০০১ এর সাথে কত যোগ করলে যোগফল ১ হবে?", options: ["০.৯৯৯", "০.৯৯", "০.০৯৯", "০.০০৯"], ans: 0 },
+            { id: 44, q: "০.৭৮ (পৌনিক ৮) × ০.৩ এর মান কত?", options: ["০.২৩", "০.২৬ (পৌনিক ৬)", "০.২৩", "০.৩৫"], ans: 1 },
+            { id: 45, q: "চার অঙ্কের কোন বৃহত্তম সংখ্যাটিকে ১২, ১৮, ২১ এবং ২৪ দিয়ে ভাগ করলে প্রতি ক্ষেত্রে যথাক্রমে ৭, ১৩, ১৬ এবং ১৯ অবশিষ্ট থাকে?", options: ["৯৮২৩", "৯৮২৪", "৯৮২৫", "৯৮২৬"], ans: 0 },
+            { id: 46, q: "২/৩, ৪/৫, ৬/৭-এর লসাগু (LCM) কত?", options: ["১২/৩৫", "১২", "২৪/৫", "১/৩৫"], ans: 1 },
+            { id: 47, q: "নীচের কোনটি একটি সসীম দশমিক ভগ্নাংশ (Terminating decimal)?", options: ["১/৩", "১/৭", "৩/৮", "২/১৫"], ans: 2 },
+            { id: 48, q: "০.৩৬ (পৌনিক ৩ ও ৬) + ০.০৫ (পৌনিক ৫) + ০.৩৩ (পৌনিক ৩) -এর মান কত?", options: ["০.৭৫ (পৌনিক ৭ ও ৫)", "০.৭৪", "০.৭৫", "১.০"], ans: 0 },
+            { id: 49, q: "তিন অঙ্কের কোন বৃহত্তম সংখ্যাটি ১০, ১২ এবং ১৫ দ্বারা সম্পূর্ণ বিভাজ্য?", options: ["৯০০", "৯৬০", "৯৯০", "৯৭০"], ans: 2 },
+            { id: 50, q: "একটি খুঁটির ১/২ অংশ কাদায়, ১/৩ অংশ জলে এবং বাকি ২ মিটার জলের উপরে আছে। খুঁটিটির মোট দৈর্ঘ্য কত?", options: ["৬ মিটার", "১২ মিটার", "১০ মিটার", "৮ মিটার"], ans: 1 },
+            { id: 51, q: "নিচের কোন সংখ্যাটি ১১ দ্বারা বিভাজ্য?", options: ["১৩৩১", "১২১০", "১১২২", "সবগুলিই"], ans: 3 },
+            { id: 52, q: "যদি ৫৮২p৪ সংখ্যাটি ৩ দ্বারা সম্পূর্ণ বিভাজ্য হয়, তবে p-এর ক্ষুদ্রতম পূর্ণসংখ্যা মান কত হবে?", options: ["০", "১", "২", "৩"], ans: 2 },
+            { id: 53, q: "৭*৩৪২ সংখ্যাটিতে তারকার (*) স্থানে কোন অঙ্ক বসালে সংখ্যাটি ৯ দ্বারা বিভাজ্য হবে?", options: ["১", "২", "৩", "৪"], ans: 1 },
+            { id: 54, q: "কোনো সংখ্যাকে ৮৮ দ্বারা বিভাজ্য হতে হলে সংখ্যাটিকে অবশ্যই কোন সংখ্যাগুলি দ্বারা বিভাজ্য হতে হবে?", options: ["৮ এবং ১১", "৪ এবং ২২", "২ এবং ৪৪", "কোনোটিই নয়"], ans: 0 },
+            { id: 55, q: "নিচের কোন সংখ্যাটি ২৪ দ্বারা বিভাজ্য?", options: ["৩৫৭১৮", "৬৩৯১২", "৪১৫০৪", "৫২২২৬"], ans: 1 },
+            { id: 56, q: "যদি একটি সংখ্যা ৭২ দ্বারা বিভাজ্য হয়, তবে সেটি নীচের কোন সংখ্যাটি দ্বারা সবসময় বিভাজ্য হবে?", options: ["১৬", "৯", "১২", "২৪"], ans: 1 },
+            { id: 57, q: "৪ এর পাওয়ার ৬১ + ৪ এর পাওয়ার ৬২ + ৪ এর পাওয়ার ৬৩ + ৪ এর পাওয়ার ৬৪ সংখ্যাটি নীচের কোন সংখ্যা দ্বারা সম্পূর্ণ বিভাজ্য?", options: ["১১", "১৩", "১৭", "১৯"], ans: 2 },
+            { id: 58, q: "৭ এর পাওয়ার ১২ - ৪ এর পাওয়ার ১২ রাশিটি নীচের কোন সংখ্যা দ্বারা বিভাজ্য?", options: ["৩৩", "৩", "৫", "A এবং B উভয়ই"], ans: 3 },
+            { id: 59, q: "তিন অঙ্কের ক্ষুদ্রতম সংখ্যাটি নির্ণয় করো যা ১২ দ্বারা বিভাজ্য।", options: ["১০০", "১০৮", "১২০", "১১২"], ans: 1 },
+            { id: 60, q: "চার অঙ্কের বৃহত্তম সংখ্যাটি কত যা ১৮ দ্বারা বিভাজ্য?", options: ["৯৯৯০", "৯৯৯৮", "৯৯৯৬", "৯৯৭২"], ans: 3 },
+            { id: 61, q: "১ থেকে ১০০ পর্যন্ত সংখ্যাগুলির মধ্যে কতগুলি সংখ্যা ৩ দ্বারা বিভাজ্য?", options: ["৩৩", "৩৪", "৩২", "৩৫"], ans: 0 },
+            { id: 62, q: "যদি কোন সংখ্যাকে ২২৫ দ্বারা ভাগ করলে ৬৪ ভাগশেষ থাকে, তবে সংখ্যাটিকে ১৫ দ্বারা ভাগ করলে কত ভাগশেষ থাকবে?", options: ["৪", "৯", "৭", "৫"], ans: 0 },
+            { id: 63, q: "সবচেয়ে ছোট কোন সংখ্যাটি ২৫, ৩০, ৩৫ ও ৪০ দ্বারা ভাগ করলে যথাক্রমে ১৪, ১৯, ২৪ ও ২৯ অবশিষ্ট থাকে?", options: ["৪২১৪", "৪১৯০", "৪১৮৯", "৪২০০"], ans: 2 },
+            { id: 64, q: "চার অঙ্কের কোন বৃহত্তম সংখ্যাটিকে ৩, ৫, ৭, ৯ দ্বারা ভাগ করলে যথাক্রমে ১, ৩, ৫, ৭ অবশিষ্ট থাকে?", options: ["৯৪৪৭", "৯৪৫০", "৯৪৫২", "৯৪৪৮"], ans: 0 },
+            { id: 65, q: "দুটি সংখ্যার লসাগু ও গসাগু যথাক্রমে ৪৩২ ও ৭২। একটি সংখ্যা ২১৬ হলে অপর সংখ্যাটি কত?", options: ["১৪৪", "১০৮", "৭২", "১২৮"], ans: 0 },
+            { id: 66, q: "দুটি সংখ্যার অনুপাত ৫:৬ এবং তাদের গসাগু ৪ হলে, সংখ্যা দুটির লসাগু কত?", options: ["২৪", "৩০", "১২০", "২৪০"], ans: 2 },
+            { id: 67, q: "কোন ক্ষুদ্রতম সংখ্যাটি থেকে ৫ বিয়োগ করলে বিয়োগফলটি ২১, ২৮, ৩৬ ও ৪৫ দ্বারা সম্পূর্ণ বিভাজ্য হবে?", options: ["১২৬০", "১২৬৫", "১২৫৫", "১২৭০"], ans: 1 },
+            { id: 68, q: "একটি ক্লাসের ছাত্রছাত্রীদের মধ্যে সমানভাবে ৭২টি আম ও ১২০টি লিচু ভাগ করে দেওয়া হলো। সর্বাধিক কতজন ছাত্রছাত্রীর মধ্যে এই ফলগুলি সমানভাবে ভাগ করা যাবে?", options: ["১২", "২৪", "৩৬", "১৮"], ans: 1 },
+            { id: 69, q: "তিনটি ঘণ্টা একসাথে বাজার পর যথাক্রমে ৯, ১২ ও ১৫ সেকেন্ড অন্তর বাজল। কম পক্ষে কতক্ষণ পর তারা আবার একসাথে বাজবে?", options: ["৩ মিনিট", "৬ মিনিট", "৯ মিনিট", "১২ মিনিট"], ans: 0 },
+            { id: 70, q: "কোন বৃহত্তম সংখ্যা দ্বারা ২৬১২, ৩৩০৫ এবং ৪৩১০-কে ভাগ করলে প্রতি ক্ষেত্রে সমান ভাগশেষ থাকবে?", options: ["৬৯", "৭০", "৭১", "৭৩"], ans: 2 },
+            { id: 71, q: "১/২ + ১/৬ + ১/১২ + ১/২০ + ১/৩০-এর মান কত?", options: ["৩/৫", "৪/৫", "৫/৬", "১"], ans: 2 },
+            { id: 72, q: "যদি ৩/৫ অংশ কাজের মূল্য ১২০ টাকা হয়, তবে সম্পূর্ণ কাজের মূল্য কত?", options: ["১৫০ টাকা", "১৮০ টাকা", "২০০ টাকা", "২৪০ টাকা"], ans: 2 },
+            { id: 73, q: "একটি চৌবাচ্চার ১/৪ অংশ পূর্ণ হতে ১৫ মিনিট লাগে, তবে পুরো চৌবাচ্চাটি পূর্ণ হতে কত সময় লাগবে?", options: ["৩০ মিনিট", "৪৫ মিনিট", "৬০ মিনিট", "৯০ মিনিট"], ans: 2 },
+            { id: 74, q: "{২ / (১ + ২)} × {৩ / (১ + ৩)} × {৪ / (১ + ৪)} ... {২০ / (১ + ২০)}-এর মান কত?", options: ["১/২১", "১/১০", "১/২০", "২/২১"], ans: 0 },
+            { id: 75, q: "দুটি সংখ্যার সমষ্টি ২৫ এবং তাদের অন্তর ১৩ হলে, সংখ্যা দুটির গুণফল কত?", options: ["১১৪", "১১২", "১০৮", "১২০"], ans: 0 },
+            { id: 76, q: "কোন সংখ্যার ১/৩ অংশের সাথে তার ১/৪ অংশ যোগ করলে যোগফল ২১ হয়, সংখ্যাটি কত?", options: ["৩৬", "২৪", "৪৮", "৩০"], ans: 0 },
+            { id: 77, q: "একটি বইয়ের ৩/৫ অংশ পড়ার পর আরও ৪০ পাতা বাকি থাকে। বইটিতে মোট কত পাতা আছে?", options: ["৮০ পাতা", "১০০ পাতা", "১২০ পাতা", "১৫০ পাতা"], ans: 1 },
+            { id: 78, q: "যদি কোনো সম্পত্তির ২/৩ অংশের মূল্য ২৬০০০ টাকা হয়, তবে ওই সম্পত্তির ১/৪ অংশের মূল্য কত?", options: ["৯৭৫০ টাকা", "৯০০০ টাকা", "৮৫০০ টাকা", "১০০০০ টাকা"], ans: 0 },
+            { id: 79, q: "একটি সংখ্যাকে ৩/৪ দ্বারা গুণ করার পরিবর্তে ৪/৩ দ্বারা গুণ করায় ভুল উত্তর আসল। ত্রুটির শতকরা হার কত?", options: ["৭৫%", "৫৬.২৫%", "৪৮%", "৪০%"], ans: 1 },
+            { id: 80, q: "৫/৬ এবং ৭/৮ এর মধ্যে পার্থক্য কত?", options: ["১/২৪", "১/১২", "১/১৮", "১/১৬"], ans: 0 },
+            { id: 81, q: "০.০৩ × ০.০৩ × ০.০৩ + ০.০২ × ০.০২ × ০.০২ / ০.০৩ × ০.০৩ - ০.০৩ × ০.০২ + ০.০২ × ০.০২ এর মান কত?", options: ["০.০৫", "০.০০৫", "০.৫", "০.০০০০৫"], ans: 0 },
+            { id: 82, q: "০.১২৫ এর সাথে কত যোগ করলে ১ হবে?", options: ["০.৮৭৫", "০.৮৫", "০.৭৭৫", "০.৯৭৫"], ans: 0 },
+            { id: 83, q: "৩.০৫ × ২.৪ এর মান কত?", options: ["৭.৩১২", "৭.৩২", "৭৩.২", "০.৭৩২"], ans: 1 },
+            { id: 84, q: "যদি ১০.২৫ × ১.৪ = ১৪.৩৫ হয়, তবে ১০২৫ × ০.০১৪ এর মান কত?", options: ["১৪.৩৫", "১৪৩.৫", "১.৪৩৫", "০.১৪৩৫"], ans: 0 },
+            { id: 85, q: "০.০০১৬ এর বর্গমূল কত?", options: ["০.০৪", "০.৪", "০.০০৪", "০.০০০০৪"], ans: 0 },
+            { id: 86, q: "০.২ + ০.২ × ০.২ - ০.২ ÷ ০.২ এর মান কত?", options: ["০.৪", "০.২৪", "-০.৬", "০.০"], ans: 2 },
+            { id: 87, q: "নিচের কোন দশমিক সংখ্যাটি ১/৮ এর সমান?", options: ["০.১২৫", "০.১২", "০.১৬", "০.১২৮"], ans: 0 },
+            { id: 88, q: "১২.৫০ টাকার ৪/৫ অংশ কত টাকা?", options: ["১০.০০ টাকা", "৮.৫০ টাকা", "৯.০০ টাকা", "১১.০০ টাকা"], ans: 0 },
+            { id: 89, q: "যদি ১ / ৩.৭১২ = ০.২৬৯৪ হয়, তবে ১ / ০.০০০৩৭১২ এর মান কত?", options: ["২৬৯৪", "২৬৯.৪", "২৬.৯৪", "২৬৯৪০"], ans: 0 },
+            { id: 90, q: "০.৪৫ ও ০.৫ এর মধ্যে একটি মূলদ সংখ্যা কত?", options: ["০.৪৬", "০.৪৮", "সবগুলিই", "০.৪৭৫"], ans: 2 },
+            { id: 91, q: "০.(পৌনিক ৩) + ০.(পৌনিক ৬) + ০.(পৌনিক ১) এর মান কত?", options: ["১", "০.৯", "১.১", "০.৯৯"], ans: 0 },
+            { id: 92, q: "০.১২(পৌনিক ২) কে সাধারণ ভগ্নাংশে প্রকাশ করলে কত হবে?", options: ["১১/৯০", "১২/৯৯", "১১/৯৯", "১৩/৯০"], ans: 0 },
+            { id: 93, q: "০.৫(পৌনিক ৫) × ৩ এর মান কত?", options: ["১.৬৬ (পৌনিক ৬)", "১.৬", "১.৫", "১.৬৫"], ans: 0 },
+            { id: 94, q: "১.২(পৌনিক ৩) কে সাধারণ ভগ্নাংশে পরিণত করলে কত হবে?", options: ["৩৭/৩০", "১১/৯", "১২/৯", "১৩/৯"], ans: 0 },
+            { id: 95, q: "০.(পৌনিক ১৫) + ০.(পৌনিক ২৫) এর মান কত?", options: ["৪০/৯৯", "৪১/৯৯", "৪২/৯৯", "৩৯/৯৯"], ans: 0 },
+            { id: 96, q: "যদি ০.(পৌনিক x) = ৪/৯ হয়, তবে x এর মান কত?", options: ["৪", "৫", "৬", "৩"], ans: 0 },
+            { id: 97, q: "০.২(পৌনিক ৪) কে সাধারণ ভগ্নাংশে প্রকাশ করলে লব ও হরের পার্থক্য কত?", options: ["৬৩", "৬৬", "৬০", "৬৫"], ans: 1 },
+            { id: 98, q: "০.(পৌনিক ৩৬) ÷ ০.(পৌনিক ১২) এর মান কত?", options: ["৩", "২", "৪", "১.৫"], ans: 0 },
+            { id: 99, q: "০.৪৫(পৌনিক ৫) এর সাধারণ ভগ্নাংশ রূপ কোনটি?", options: ["৪১/৯০", "৪৫/৯৯", "৪/৯", "৫/১১"], ans: 0 },
+            { id: 100, q: "০.৭(পৌনিক ৭) এর বর্গমূল কত?", options: ["০.(পৌনিক ৮)", "০.(পৌনিক ৭)", "০.৯", "০.৮৮"], ans: 0 },
+            { id: 101, q: "সরল করো: ২৫ - [২০ - {১৫ - (১০ - ৫)]}", options: ["২০", "১৫", "২৫", "১৮"], ans: 0 },
+            { id: 102, q: "যদি a * b = a^2 + b^2 - ab হয়, তবে ৯ * ৫ এর মান কত?", options: ["৬১", "৬৫", "৫৯", "৭১"], ans: 0 },
+            { id: 103, q: "৫ ÷ ৫ অফ ৫ × ৫ এর মান কত?", options: ["১", "২৫", "১/৫", "৫"], ans: 2 },
+            { id: 104, q: "সরল করো: ৭ই ১/২ - [৩ই ১/৪ + {২ই ১/২ - (১ই ১/২ - ১/৩)}]", options: ["৩ই ১/১২", "৩ই ৫/১২", "২ই ৭/১২", "৩ই ৭/১২"], ans: 0 },
+            { id: 105, q: "{ (৭.৫ × ৭.৫ + ৩.৫ × ৩.৫ - ২ × ৭.৫ × ৩.৫) } এর মান কত?", options: ["১৬", "১৪", "১৮", "২০"], ans: 0 },
+            { id: 106, q: "যদি x = ২ এবং y = ৩ হয়, তবে (x^y + y^x) এর মান কত?", options: ["১৭", "২৫", "৩১", "১৯"], ans: 0 },
+            { id: 107, q: "সরল করো: ১ / [১ + ১ / {১ + ১ / (১ + ১/২)}]", options: ["৫/৮", "৩/৫", "৮/১৩", "৫/১৩"], ans: 2 },
+            { id: 108, q: "৯৯৯ সমস্ত ১/৭ + ৯৯৯ সমস্ত ২/৭ + ৯৯৯ সমস্ত ৩/৭ + ৯৯৯ সমস্ত ৪/৭ + ৯৯৯ সমস্ত ৫/৭ + ৯৯৯ সমস্ত ৬/৭ এর মান কত?", options: ["৫৯৯৭", "৫৯৯৪", "৬০০০", "৫৯৯৫"], ans: 0 },
+            { id: 109, q: "যদি ৩^(x+৮) = ২৭^(২x+১) হয়, তবে x এর মান কত?", options: ["১", "২", "৩", "৫"], ans: 0 },
+            { id: 110, q: "০.০৩ × ০.০৩ - ০.০২ × ০.০২ / ০.০৩ + ০.০২ এর মান কত?", options: ["০.০১", "০.১", "০.০০১", "০.০০০০১"], ans: 0 },
+            { id: 111, q: "পাঁচ অঙ্কের কোন ক্ষুদ্রতম সংখ্যাটিকে ১৩ দ্বারা ভাগ করলে কোনো ভাগশেষ থাকে না?", options: ["১০০১০", "১০০২৩", "১০০৩৬", "১০০১০"], ans: 1 },
+            { id: 112, q: "যদি A : B = ২ : ৩ এবং B : C = ৪ : ৫ হয়, তবে A : C কত?", options: ["৮ : ১৫", "৬ : ১০", "১২ : ১৫", "১০ : ১৮"], ans: 0 },
+            { id: 113, q: "একটি সংখ্যাকে ১২, ১৬ ও ২০ দিয়ে ভাগ করলে প্রতি ক্ষেত্রে ৫ অবশিষ্ট থাকে। সংখ্যাটি কত?", options: ["২৪৫", "২৫৫", "২৩৫", "২৬০"], ans: 0 },
+            { id: 114, q: "দুই অঙ্কের একটি সংখ্যার অঙ্ক দুটির সমষ্টি ৯। সংখ্যাটি থেকে ৪৫ বিয়োগ করলে অঙ্কদ্বয় স্থান পরিবর্তন করে। সংখ্যাটি কত?", options: ["৭২", "৮১", "৬৩", "৯০০"], ans: 0 },
+            { id: 115, q: "৩/৪ এবং ৫/৬ এর লসাগু কত?", options: ["১৫/২", "১৫", "৫/২", "১/১২"], ans: 1 },
+            { id: 116, q: "যদি ১২ জন লোক একটি কাজ ৯ দিনে করতে পারে, তবে ৬ জন লোক ওই কাজ কত দিনে করবে?", options: ["১৮ দিন", "১৬ দিন", "১২ দিন", "২৪ দিন"], ans: 0 },
+            { id: 117, q: "একটি ভগ্নাংশের লব ও হরের যোগফল ১১। যদি লবের সাথে ১ যোগ করা হয় এবং হর থেকে ২ বিয়োগ করা হয়, তবে ভগ্নাংশটি ২/৩ হয়। ভগ্নাংশটি কত?", options: ["৪/৭", "৫/৬", "৩/৮", "৫/৬"], ans: 0 },
+            { id: 118, q: "চার অঙ্কের বৃহত্তম সংখ্যাটি কত যা ১২, ১৫, ১৮, ২৭ দ্বারা বিভাজ্য?", options: ["৯৭২০", "৯৮১০", "৯৭৫০", "৯৮৪০"], ans: 0 },
+            { id: 119, q: "০.০৪ এর বর্গমূল কত?", options: ["০.২", "০.০২", "০.০০২", "০.৪"], ans: 0 },
+            { id: 120, q: "সরল করো: ১৬ ÷ ৪ অফ ২ × ৩ + (৫ - ২)", options: ["৯", "৬", "১৫", "১২"], ans: 0 }
+        ];
+
+        let currentQuestionIndex = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let markedForReview = new Array(questions.length).fill(false);
+        let timerInterval = null;
+        let totalSeconds = 90 * 60; // 90 minutes
+
+        function startExam() {
+            document.getElementById('start-view').classList.add('hidden');
+            document.getElementById('exam-view').classList.remove('hidden');
+            document.getElementById('timer-container').classList.remove('hidden');
+            document.getElementById('timer-container').classList.add('flex');
+            
+            initPalette();
+            loadQuestion(0);
+            startTimer();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    submitExam();
+                    return;
+                }
+                totalSeconds--;
+                let hrs = Math.floor(totalSeconds / 3600);
+                let mins = Math.floor((totalSeconds % 3600) / 60);
+                let secs = totalSeconds % 60;
+                document.getElementById('time-remaining').innerText = 
+                    `${hrs.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+            }, 1000);
+        }
+
+        function initPalette() {
+            const grid = document.getElementById('palette-grid');
+            grid.innerHTML = '';
+            for (let i = 0; i < questions.length; i++) {
+                let btn = document.createElement('button');
+                btn.id = `palette-btn-${i}`;
+                btn.innerText = i + 1;
+                btn.className = "w-9 h-9 rounded-xl font-medium text-xs border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 transition flex items-center justify-center";
+                btn.onclick = () => jumpToQuestion(i);
+                grid.appendChild(btn);
+            }
+            updatePaletteStatus();
+        }
+
+        function updatePaletteStatus() {
+            let answeredCount = 0;
+            for (let i = 0; i < questions.length; i++) {
+                let btn = document.getElementById(`palette-btn-${i}`);
+                if (!btn) continue;
+                
+                // Reset classes
+                btn.className = "w-9 h-9 rounded-xl font-medium text-xs border transition flex items-center justify-center ";
+                
+                if (userAnswers[i] !== null && markedForReview[i]) {
+                    btn.className += "bg-amber-500 text-white border-amber-600 shadow-sm";
+                    answeredCount++;
+                } else if (userAnswers[i] !== null) {
+                    btn.className += "bg-emerald-500 text-white border-emerald-600 shadow-sm";
+                    answeredCount++;
+                } else if (markedForReview[i]) {
+                    btn.className += "bg-amber-100 text-amber-800 border-amber-300";
+                } else {
+                    btn.className += "bg-white text-slate-700 border-slate-200 hover:bg-slate-100";
+                }
+
+                if (i === currentQuestionIndex) {
+                    btn.className += " ring-2 ring-indigo-600 ring-offset-1";
+                }
+            }
+            document.getElementById('answered-count').innerText = `${answeredCount}/১২০ উত্তর দেওয়া হয়েছে`;
+        }
+
+        function loadQuestion(index) {
+            currentQuestionIndex = index;
+            const q = questions[index];
+            
+            document.getElementById('question-indicator').innerText = `প্রশ্ন ${index + 1} / ১২০`;
+            document.getElementById('question-text').innerText = q.q;
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((opt, optIndex) => {
+                let isSelected = userAnswers[index] === optIndex;
+                let optDiv = document.createElement('div');
+                optDiv.className = `p-4 rounded-2xl border transition cursor-pointer flex items-center space-x-3 ${isSelected ? 'border-indigo-600 bg-indigo-50/60 text-indigo-950 font-medium shadow-sm' : 'border-slate-200 hover:border-slate-300 bg-white text-slate-700'}`;
+                optDiv.onclick = () => selectOption(optIndex);
+
+                let label = ['A', 'B', 'C', 'D'][optIndex];
+                optDiv.innerHTML = `
+                    <div class="w-7 h-7 rounded-xl flex items-center justify-center text-xs font-semibold ${isSelected ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-600 border border-slate-200'}">${label}</div>
+                    <span class="flex-1 text-sm sm:text-base">${opt}</span>
+                `;
+                optionsContainer.appendChild(optDiv);
+            });
+
+            // Update Review button state
+            let reviewBtn = document.getElementById('mark-review-btn');
+            if (markedForReview[index]) {
+                reviewBtn.className = "text-xs sm:text-sm font-medium px-3 py-1.5 rounded-xl border border-amber-500 text-white bg-amber-500 transition shadow-sm";
+                reviewBtn.innerHTML = `<i class="fa-solid fa-bookmark mr-1"></i> রিভিউ মার্ক করা আছে`;
+            } else {
+                reviewBtn.className = "text-xs sm:text-sm font-medium px-3 py-1.5 rounded-xl border border-amber-300 text-amber-700 bg-amber-50 hover:bg-amber-100 transition";
+                reviewBtn.innerHTML = `<i class="fa-regular fa-bookmark mr-1"></i> রিভিউ মার্ক করুন`;
+            }
+
+            document.getElementById('prev-btn').disabled = index === 0;
+            document.getElementById('next-btn').innerText = index === questions.length - 1 ? 'শেষ প্রশ্ন' : 'পরবর্তী';
+
+            updatePaletteStatus();
+        }
+
+        function selectOption(optIndex) {
+            userAnswers[currentQuestionIndex] = optIndex;
+            loadQuestion(currentQuestionIndex);
+        }
+
+        function clearResponse() {
+            userAnswers[currentQuestionIndex] = null;
+            loadQuestion(currentQuestionIndex);
+        }
+
+        function toggleMarkForReview() {
+            markedForReview[currentQuestionIndex] = !markedForReview[currentQuestionIndex];
+            loadQuestion(currentQuestionIndex);
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                loadQuestion(currentQuestionIndex + 1);
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                loadQuestion(currentQuestionIndex - 1);
+            }
+        }
+
+        function jumpToQuestion(index) {
+            loadQuestion(index);
+        }
+
+        function confirmSubmit() {
+            document.getElementById('confirm-modal').classList.remove('hidden');
+            document.getElementById('confirm-modal').classList.add('flex');
+        }
+
+        function closeModal() {
+            document.getElementById('confirm-modal').classList.add('hidden');
+            document.getElementById('confirm-modal').classList.remove('flex');
+        }
+
+        function submitExam() {
+            clearInterval(timerInterval);
+            closeModal();
+
+            document.getElementById('exam-view').classList.add('hidden');
+            document.getElementById('timer-container').classList.add('hidden');
+            document.getElementById('result-view').classList.remove('hidden');
+
+            let correctCount = 0;
+            let incorrectCount = 0;
+            let unattemptedCount = 0;
+
+            questions.forEach((q, i) => {
+                if (userAnswers[i] === null) {
+                    unattemptedCount++;
+                } else if (userAnswers[i] === q.ans) {
+                    correctCount++;
+                } else {
+                    incorrectCount++;
+                }
+            });
+
+            document.getElementById('res-score').innerText = `${correctCount} / ১২০`;
+            document.getElementById('res-correct').innerText = correctCount;
+            document.getElementById('res-incorrect').innerText = incorrectCount;
+            document.getElementById('res-unattempted').innerText = unattemptedCount;
+
+            // Generate detailed review items
+            const reviewItemsContainer = document.getElementById('review-items');
+            reviewItemsContainer.innerHTML = '';
+
+            questions.forEach((q, i) => {
+                let userAns = userAnswers[i];
+                let isCorrect = userAns === q.ans;
+                let isUnattempted = userAns === null;
+
+                let card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3";
+
+                let statusBadge = isUnattempted ? 
+                    `<span class="text-xs px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200">উত্তরহীন</span>` :
+                    isCorrect ? 
+                    `<span class="text-xs px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200"><i class="fa-solid fa-check mr-1"></i> সঠিক</span>` :
+                    `<span class="text-xs px-2.5 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-200"><i class="fa-solid fa-xmark mr-1"></i> ভুল</span>`;
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">প্রশ্ন নং ${i + 1}</span>
+                        ${statusBadge}
+                    </div>
+                    <div class="font-medium text-slate-900 text-sm sm:text-base">${q.q}</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm pt-2">
+                        <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                            <span class="text-slate-500 font-medium">আপনার উত্তর:</span> 
+                            <span class="font-semibold ${isUnattempted ? 'text-slate-400' : isCorrect ? 'text-emerald-600' : 'text-rose-600'}">
+                                ${isUnattempted ? 'দেওয়া হয়নি' : q.options[userAns]}
+                            </span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-emerald-50/50 border border-emerald-100">
+                            <span class="text-emerald-700 font-medium">সঠিক উত্তর:</span> 
+                            <span class="font-semibold text-emerald-700">${q.options[q.ans]}</span>
+                        </div>
+                    </div>
+                `;
+                reviewItemsContainer.appendChild(card);
+            });
+        }
+
+        function scrollToReview() {
+            document.getElementById('review-list-container').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
